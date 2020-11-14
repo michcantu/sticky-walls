@@ -1,91 +1,151 @@
-let _1: game.LedSprite = null
-let _2: game.LedSprite = null
-let _3: game.LedSprite = null
-let _4: game.LedSprite = null
-let _5: game.LedSprite = null
-let _6: game.LedSprite = null
-let _7: game.LedSprite = null
-let player: game.LedSprite = null
-let dice = 0
-input.onButtonPressed(Button.A, function () {
-    player.turn(Direction.Right, 180)
-    player.move(1)
-})
-input.onPinPressed(TouchPin.P2, function () {
-    player.turn(Direction.Right, 90)
-    player.move(1)
-})
-input.onButtonPressed(Button.B, function () {
-    player.move(1)
-})
-input.onPinPressed(TouchPin.P1, function () {
-    player.turn(Direction.Left, 90)
-    player.move(1)
-})
-input.onGesture(Gesture.Shake, function () {
+input.onPinPressed(TouchPin.P0, function () {
     dice = randint(1, 1)
     basic.showNumber(dice)
     if (dice == 1) {
-        _1 = game.createSprite(0, 1)
-        _2 = game.createSprite(0, 2)
-        _3 = game.createSprite(3, 4)
-        _4 = game.createSprite(1, 3)
-        _5 = game.createSprite(2, 4)
-        _6 = game.createSprite(1, 1)
-        _7 = game.createSprite(3, 2)
-        basic.pause(500)
-        player = game.createSprite(0, 0)
+        basic.showLeds(`
+            . # . . #
+            . . . . #
+            . . # . .
+            # . # . #
+            # . . . .
+            `)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+            for (let index = 0; index < 4; index++) {
+                basic.showLeds(`
+                    . . . . .
+                    . # . # .
+                    . . . . .
+                    . . # # .
+                    . # . . #
+                    `)
+                basic.showLeds(`
+                    . . . . .
+                    . # . # .
+                    . . . . .
+                    . # # # .
+                    # . . . #
+                    `)
+                basic.showLeds(`
+                    . . . . .
+                    . # . # .
+                    . . . . .
+                    . # # . .
+                    # . . # .
+                    `)
+            }
+        }
     } else if (dice == 2) {
         basic.showLeds(`
+            . . . # #
+            # . . . .
+            # . # # .
             . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
+            . # . . .
             `)
-        basic.pause(200)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+        }
     } else if (dice == 3) {
         basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
+            . . . # .
+            . . . # .
+            # # . . .
+            . . . . #
+            . # # . .
             `)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+        }
     } else if (dice == 4) {
         basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
+            . . # . #
+            . . # . .
+            # . . # .
+            # . . . .
+            . . # # .
             `)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+        }
     } else if (dice == 5) {
         basic.showLeds(`
+            . . . # .
+            # # . # .
             . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
+            . # . # #
+            # . . . .
             `)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+        }
     } else if (dice == 6) {
         basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
+            . . # . #
+            . # . . .
+            . . . # #
+            # . . . .
+            # . # . .
             `)
+        led.plot(x, y)
+        while (x == 1 && y == 0) {
+            basic.clearScreen()
+            music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+            basic.showString("You Lost")
+        }
     }
 })
+input.onButtonPressed(Button.A, function () {
+    led.unplot(x, y)
+    basic.pause(100)
+    x += -1
+    led.toggle(x, y)
+})
+input.onPinPressed(TouchPin.P2, function () {
+    led.unplot(x, y)
+    basic.pause(100)
+    y += 1
+    led.plot(x, y)
+})
+input.onButtonPressed(Button.B, function () {
+    led.unplot(x, y)
+    basic.pause(100)
+    x += 1
+    led.plot(x, y)
+})
+input.onPinPressed(TouchPin.P1, function () {
+    led.unplot(x, y)
+    basic.pause(100)
+    y += -1
+    led.plot(x, y)
+})
+let dice = 0
+let y = 0
+let x = 0
+x = 4
+y = 4
 basic.forever(function () {
-    if (input.buttonIsPressed(Button.A)) {
-    	
-    } else if (input.buttonIsPressed(Button.B)) {
-    	
-    } else if (input.pinIsPressed(TouchPin.P1)) {
-    	
-    } else if (input.pinIsPressed(TouchPin.P2)) {
-    	
+    for (let index = 0; index < 2; index++) {
+        while (x == 0 && y == 0) {
+            basic.clearScreen()
+            music.playMelody("D G E A C5 F C B ", 387)
+            basic.showString("You Won")
+        }
     }
+    basic.clearScreen()
 })
