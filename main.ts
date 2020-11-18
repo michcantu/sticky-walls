@@ -137,8 +137,22 @@ input.onPinPressed(TouchPin.P1, function () {
 let dice = 0
 let y = 0
 let x = 0
+if (input.lightLevel() >= 128) {
+    basic.showString("Good Morning")
+} else {
+    basic.showString("Good Afternoon")
+}
+basic.showString("a= left")
+basic.showString("b= right")
+basic.showString("1= up")
+basic.showString("2= down")
 x = 4
 y = 4
+for (let count = 0; count <= 3; count++) {
+    basic.showNumber(count)
+    basic.clearScreen()
+}
+basic.showString("START!")
 basic.forever(function () {
     for (let index = 0; index < 2; index++) {
         while (x == 0 && y == 0) {
